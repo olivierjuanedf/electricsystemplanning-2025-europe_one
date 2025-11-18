@@ -176,7 +176,8 @@ def capa_info_log(df_gen_capa: pd.DataFrame):
 
 
 def calc_net_demand(df_demand: pd.DataFrame, df_gen_capa: pd.DataFrame, df_agg_cf: pd.DataFrame,
-                    cf_agg_prod_types_tb_read: List[str], capas_aggreg_pt_with_cf: Dict[str, int]) \
+                    cf_agg_prod_types_tb_read: List[str], capas_aggreg_pt_with_cf: Dict[str, int],
+                    df_hydro_ror_prod: pd.DataFrame = None) \
         -> (pd.DataFrame, List[str]):
     """
     Calculate net demand
@@ -201,6 +202,8 @@ def calc_net_demand(df_demand: pd.DataFrame, df_gen_capa: pd.DataFrame, df_agg_c
             current_np_net_demand -= current_capa * np.array(current_cf_data[value_col])
         else:
             pts_wo_cf_data.append(agg_prod_type)
+    if df_hydro_ror_prod is not None and len(df_hydro_ror_prod) > 0:
+        current_np_net_demand -= np.array(df_hydro_ror_prod[value_col])
     df_net_demand = deepcopy(df_demand)
     df_net_demand[value_col] = current_np_net_demand
     # warning if prod. types without CF data obtained -> not taken into account here...
