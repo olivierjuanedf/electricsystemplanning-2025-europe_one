@@ -256,15 +256,23 @@ def get_csv_file_named(name: str, country: str, year: int, climatic_year: int, s
 
 def get_opt_power_file(country: str, year: int, climatic_year: int, start_horizon: datetime,
                        toy_model_output: bool = False) -> str:
-    return get_csv_file_named('opt_power', country, year, climatic_year, start_horizon, toy_model_output)
+    return get_csv_file_named(name='opt_power', country=country, year=year, climatic_year=climatic_year, 
+                              start_horizon=start_horizon, toy_model_output=toy_model_output)
 
 
 def get_storage_opt_dec_file(country: str, year: int, climatic_year: int, start_horizon: datetime,
                              toy_model_output: bool = False) -> str:
-    return get_csv_file_named('storage_opt_decisions', country, year, climatic_year, start_horizon,
-                              toy_model_output)
+    return get_csv_file_named(name='storage_opt_decisions', country=country, year=year, climatic_year=climatic_year, 
+                              start_horizon=start_horizon, toy_model_output=toy_model_output)
 
+
+def get_link_flow_opt_dec_file(country: str, year: int, climatic_year: int, start_horizon: datetime,
+                               toy_model_output: bool= False) -> str:
+    return get_csv_file_named(name='link-flow_opt_decisions', country=country, year=year, climatic_year=climatic_year, 
+                              start_horizon=start_horizon, toy_model_output=toy_model_output)
+    
 
 def get_marginal_prices_file(country: str, year: int, climatic_year: int, start_horizon: datetime,
                              toy_model_output: bool = False) -> str:
-    return get_csv_file_named('marginal_prices', country, year, climatic_year, start_horizon, toy_model_output)
+    return get_csv_file_named(name='marginal_prices', country=country, year=year, climatic_year=climatic_year, 
+                              start_horizon=start_horizon, toy_model_output=toy_model_output)

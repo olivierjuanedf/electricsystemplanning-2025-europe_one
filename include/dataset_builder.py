@@ -17,7 +17,8 @@ from common.constants.pypsa_params import GEN_UNITS_PYPSA_PARAMS
 from common.error_msgs import print_errors_list
 from common.fuel_sources import FuelSource
 from common.long_term_uc_io import (get_marginal_prices_file, get_network_figure, get_opt_power_file,
-                                    get_storage_opt_dec_file, get_figure_file_named, FigNamesPrefix, get_output_figure)
+                                    get_storage_opt_dec_file, get_link_flow_opt_dec_file, get_figure_file_named, 
+                                    FigNamesPrefix, get_output_figure)
 from common.plot_params import PlotParams
 from utils.basic_utils import lexico_compar_str, rm_elts_with_none_val, rm_elts_in_str, sort_lexicographically
 from utils.df_utils import rename_df_columns
@@ -433,7 +434,7 @@ class PypsaModel:
 
     def plot_link_flows_at_opt(self, origin_country: str, year: int, climatic_year: int, 
                                start_horizon: datetime, toy_model_output: bool = False):
-        logging.info('Preliminary code for optimal flow plotting to ba adapted/tested to get output figures')
+        # logging.info('Preliminary code for optimal flow plotting to be adapted/tested to get output figures')
         # select links with origin_country as p0
         direct_flows = self.link_flow_var_opt_direct
         reverse_flows = self.link_flow_var_opt_reverse
@@ -513,6 +514,23 @@ class PypsaModel:
         if rename_snapshot_col:
             df_storage_all_decs.index.name = OUTPUT_DATE_COL
         df_storage_all_decs.to_csv(storage_opt_dec_csv_file)
+        # and finally link flow decisions
+        link_flow_opt_dec_csv_file = \
+            get_link_flow_opt_dec_file(country=country, year=year, climatic_year=climatic_year,
+                                       start_horizon=start_horizon, toy_model_output=toy_model_output)
+        logging.info(f'Save link flow optimal decisions to csv file {link_flow_opt_dec_csv_file}')
+        df_link_flow_opt_direct = self.link_flow_var_opt_direct
+        df_link_flow_opt_reverse = self.link_flow_var_opt_reverse
+        # add reverse suffix to reverse flows
+        new_cols = []
+        for flow_col in df_link_flow_opt_reverse.columns:
+            flow_col_split = flow_col.split('_')
+            new_cols.append(f'{flow_col_split[0]}-reverse_{flow_col_split[1]}')
+        df_link_flow_opt_reverse.columns = new_cols
+        df_link_flow_opt = pd.concat([df_link_flow_opt_direct, df_link_flow_opt_reverse], axis=1) 
+        if rename_snapshot_col:
+            df_link_flow_opt.index.name = OUTPUT_DATE_COL
+        df_link_flow_opt.to_csv(link_flow_opt_dec_csv_file)
 
     def save_marginal_prices_to_csv(self, year: int, climatic_year: int, start_horizon: datetime,
                                     rename_snapshot_col: bool = True, toy_model_output: bool = False,
