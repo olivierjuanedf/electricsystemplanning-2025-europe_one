@@ -21,7 +21,8 @@
         "solar_pv": "yellow",
         "solar_thermal": "orange",
         "wind_offshore": "magenta",
-        "wind_onshore": "purple"
+        "wind_onshore": "purple",
+        "other_renewables": "cyan"
       },
       "eco2mix": {
         "batteries": null,
