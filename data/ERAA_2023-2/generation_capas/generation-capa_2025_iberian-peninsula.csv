@@ -1,7 +1,7 @@
 zone;production_type;power_capacity;power_capacity_turbine;power_capacity_pumping;power_capacity_injection;power_capacity_offtake;energy_capacity
 iberian-peninsula;Batteries;0.0;0.0;0.0;100.0;100.0;200.0
 iberian-peninsula;Biofuel;0.0;0.0;0.0;0.0;0.0;0.0
-iberian-peninsula;Demand Side Response capacity;500.0;0.0;0.0;0.0;0.0;0.0
+iberian-peninsula;Demand Side Response capacity;500.0;0.0;0.0;0.0;0.0;0.0 ######
 iberian-peninsula;Gas ;28327.56;0.0;0.0;0.0;0.0;0.0
 iberian-peninsula;Hard Coal;561.8;0.0;0.0;0.0;0.0;0.0
 iberian-peninsula;Hydro - Pondage;0.0;266.0;0.0;0.0;0.0;3700.0

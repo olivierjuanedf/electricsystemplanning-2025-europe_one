@@ -1,11 +1,14 @@
 {
   "data_analysis_list": [
     {
-      "analysis_type": "plot",
-      "data_type": "net_demand",
-      "countries": "france",
-      "years": 2025,
-      "climatic_years": 1985
+      "analysis_type": "r",
+      "data_type": "demand",
+      "countries": "iberian-peninsula",
+      "years": 2033,
+      "climatic_years": [1982, 1985, 1989, 2003, 2010, 2016],
+      "period_start": "1900/01/01",
+      "period_end": "1900/12/31"
     }
+    
   ]
 }

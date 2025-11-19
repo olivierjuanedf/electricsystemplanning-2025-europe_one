@@ -280,7 +280,7 @@ def simple_plot(x: Union[np.ndarray, list], y: Union[np.ndarray, list, Dict[str,
         fig_style = FigureStyle()
         fig_style.process()
 
-    plt.figure(figsize=fig_style.size)
+    plt.figure(figsize=(30, 15))
     # TODO: merge all cases in a unique call of plt.plot
     if isinstance(y, dict):
         for key_label, values in y.items():
