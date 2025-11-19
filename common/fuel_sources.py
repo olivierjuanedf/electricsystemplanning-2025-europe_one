@@ -21,6 +21,7 @@ class FuelNames:
     solar: str = 'solar'
     uranium: str = 'uranium'
     wind: str = 'wind'
+    demand_side_response: str = 'demand_side_response'
 
 
 @dataclass
@@ -56,6 +57,18 @@ def add_other_sources(fuel_sources: Dict[str, FuelSource]) -> Dict[str, FuelSour
         current_matched_params = fuel_sources[matched_name].__dict__
         fs_params.extend([current_matched_params[elt] for elt in matched_params])
         fuel_sources[name] = FuelSource(*fs_params)
+
+    # 2. NEW: Explicitly add Hydro (if missing)
+    if FuelNames.hydro not in fuel_sources:
+        # Hydro: 0 emissions, and we manually set primary cost to 0
+        fuel_sources[FuelNames.hydro] = FuelSource(name=FuelNames.hydro.capitalize(), co2_emissions=0.0)
+        fuel_sources[FuelNames.hydro].primary_cost = 0.0
+
+    # 3. NEW: Explicitly add Demand Side Response
+    if FuelNames.demand_side_response not in fuel_sources:
+        # DSR: 0 emissions (it's load reduction), 0 "fuel" cost (cost is defined in the generator as marginal_cost)
+        fuel_sources[FuelNames.demand_side_response] = FuelSource(name='DSR', co2_emissions=0.0)
+        fuel_sources[FuelNames.demand_side_response].primary_cost = 0.0
     return fuel_sources
 
 

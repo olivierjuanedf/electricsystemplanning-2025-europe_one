@@ -6,7 +6,7 @@
       "own": {
         "batteries": "pink",
         "biofuel": "green",
-        "coal": "brown",
+        "hard_coal": "brown",
         "dsr": "red",
         "failure": "gold",
         "gas": "grey",
@@ -21,12 +21,14 @@
         "solar_pv": "yellow",
         "solar_thermal": "orange",
         "wind_offshore": "magenta",
-        "wind_onshore": "purple"
+        "wind_onshore": "purple",
+        "other_renewables": "beige",
+        "other_non_renewables": "cyan"
       },
       "eco2mix": {
         "batteries": null,
         "biofuel": "green",
-        "coal": null,
+        "hard_coal": null,
         "dsr": null,
         "gas": "red",
         "hydro_pondage": "blue",
@@ -47,7 +49,7 @@
       "own": {
         "batteries": ".",
         "biofuel": "o",
-        "coal": "v",
+        "hard_coal": "v",
         "dsr": "^",
         "gas": "<",
         "hydro_pondage": ">",
@@ -77,11 +79,13 @@
       "hydro_reservoir",
       "nuclear",
       "biofuel",
-      "coal",
+      "hard_coal",
       "gas",
       "oil",
       "batteries",
       "dsr",
+      "other_renewables",
+      "other_non_renewables",
       "failure"
     ]
   },

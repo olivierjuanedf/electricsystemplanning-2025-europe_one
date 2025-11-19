@@ -34,28 +34,28 @@ def get_generators(country_trigram: str, fuel_sources: Dict[str, FuelSource], wi
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_hard-coal',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.coal,
             GEN_UNITS_PYPSA_PARAMS.nominal_power: 2362,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.coal].primary_cost * 0.37,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.coal].primary_cost / 0.37,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.37
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_gas',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.gas,
             GEN_UNITS_PYPSA_PARAMS.nominal_power: 43672,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.gas].primary_cost * 0.5,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.gas].primary_cost / 0.5,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.5
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_oil',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.oil,
             GEN_UNITS_PYPSA_PARAMS.nominal_power: 866,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.oil].primary_cost * 0.4,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.oil].primary_cost / 0.4,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.4
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_other-non-renewables',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.other_non_renewables,
             GEN_UNITS_PYPSA_PARAMS.nominal_power: 8239,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.other_non_renewables].primary_cost * 0.4,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.other_non_renewables].primary_cost / 0.4,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.4
         },
         {
