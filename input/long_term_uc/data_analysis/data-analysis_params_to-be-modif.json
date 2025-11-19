@@ -1,11 +1,14 @@
 {
   "data_analysis_list": [
     {
-      "analysis_type": "plot",
-      "data_type": "net_demand",
-      "countries": "france",
+      "analysis_type": "plot_duration_curve",
+      "data_type": "demand",
+      "countries": [
+        "france",
+        "benelux"
+      ],
       "years": 2025,
-      "climatic_years": 1985
+      "climatic_years": 2003
     }
   ]
 }
