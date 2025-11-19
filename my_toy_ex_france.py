@@ -62,7 +62,7 @@ phase_name = EnvPhaseNames.monozone_toy_uc_model
 # (I.1) unique country modeled in this example -> some comments are provided below to explain how PyPSA model could be
 # extended to a multiple countries case (if you have time - and motivation! - to test it on your own)
 # See [N-countries] tags
-country = 'italy'
+country = 'france'
 # (I.2) select first ERAA year available, as an example (2033 also available)
 # -> available values [2025, 2033]
 year = 2025

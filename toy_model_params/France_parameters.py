@@ -1,6 +1,5 @@
 from typing import Dict, List, Union
 
-
 import pandas as pd
 import numpy as np
 
@@ -31,61 +30,69 @@ def get_generators(country_trigram: str, fuel_sources: Dict[str, FuelSource], wi
     min_power_pu/max_power_pu=0/1, marginal_cost=0
     -> see field 'generator_params_default_vals' in file input/long_term_uc/pypsa_static_params.json
     """
-    n_ts = len(wind_on_shore_cf_data['value'].values)
+    n_ts = len(wind_on_shore_cf_data['value'].values),
     generators = [
+         # get number of time-slots based on length of CF data
+        
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_hard-coal',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.coal,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 2362,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.coal].primary_cost * 0.37,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 0,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.coal].primary_cost / 0.37,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.37
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_gas',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.gas,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 43672,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.gas].primary_cost * 0.5,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 7189,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.gas].primary_cost / 0.5,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.5
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_oil',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.oil,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 866,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.oil].primary_cost * 0.4,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 1331,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.oil].primary_cost / 0.4,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.4
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_other-non-renewables',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.other_non_renewables,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 8239,
-            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.other_non_renewables].primary_cost * 0.4,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 5799,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.other_non_renewables].primary_cost / 0.4,
             GEN_UNITS_PYPSA_PARAMS.efficiency: 0.4
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_wind-on-shore',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.wind,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 14512,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 24058,
             GEN_UNITS_PYPSA_PARAMS.max_power_pu: wind_on_shore_cf_data['value'].values,
             GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.wind].primary_cost
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_wind-off-shore',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.wind,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 791,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 2015,
             GEN_UNITS_PYPSA_PARAMS.max_power_pu: wind_off_shore_cf_data['value'].values,
             GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.wind].primary_cost
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_solar-pv',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.solar,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 39954,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 18184,
             GEN_UNITS_PYPSA_PARAMS.max_power_pu: solar_pv_cf_data['value'].values,
             GEN_UNITS_PYPSA_PARAMS.marginal_cost: fuel_sources[FuelNames.solar].primary_cost
         },
         {
             GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_other-renewables',
             GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.other_renewables,
-            GEN_UNITS_PYPSA_PARAMS.nominal_power: 4466,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 2265,
+        },
+        {
+            GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_uranium',
+            GEN_UNITS_PYPSA_PARAMS.carrier: FuelNames.uranium,
+            GEN_UNITS_PYPSA_PARAMS.nominal_power: 61761,
+            GEN_UNITS_PYPSA_PARAMS.marginal_cost: 15
         },
         # QUESTION: what is this - very necessary - last fictive asset?
         {
@@ -93,8 +100,8 @@ def get_generators(country_trigram: str, fuel_sources: Dict[str, FuelSource], wi
             GEN_UNITS_PYPSA_PARAMS.carrier: DummyFuelNames.ac,
             GEN_UNITS_PYPSA_PARAMS.nominal_power: 1e10,
             GEN_UNITS_PYPSA_PARAMS.marginal_cost: 1e5
-        }
-          # this is a battery
+        },
+         # this is a battery
         {GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_battery',
          GEN_UNITS_PYPSA_PARAMS.carrier: 'Flexibility', 
          GEN_UNITS_PYPSA_PARAMS.nominal_power: 4000,
@@ -104,7 +111,7 @@ def get_generators(country_trigram: str, fuel_sources: Dict[str, FuelSource], wi
          GEN_UNITS_PYPSA_PARAMS.soc_init: 1000,
          GEN_UNITS_PYPSA_PARAMS.efficiency_store: 0.95,
          GEN_UNITS_PYPSA_PARAMS.efficiency_dispatch: 0.95
-        }, 
+        },
         # this is an hydro reservoir - with very fictive values!
         {GEN_UNITS_PYPSA_PARAMS.name: f'{country_trigram}_hydro-reservoir',
          GEN_UNITS_PYPSA_PARAMS.carrier: 'Hydro', 
@@ -112,11 +119,12 @@ def get_generators(country_trigram: str, fuel_sources: Dict[str, FuelSource], wi
          GEN_UNITS_PYPSA_PARAMS.max_hours: 1000,
          GEN_UNITS_PYPSA_PARAMS.soc_init: 1000000,
          GEN_UNITS_PYPSA_PARAMS.inflow: np.ones(n_ts)
-        },  
-
-
+        }  
+              
     ]
     return generators
+ 
+
 
 
 def set_gen_as_list_of_gen_units_data(generators: List[GENERATOR_DICT_TYPE]) -> List[GenerationUnitData]:

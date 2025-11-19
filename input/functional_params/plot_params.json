@@ -4,7 +4,7 @@
     "marker_choice": "own",
     "palettes_def": {
       "own": {
-        "batteries": "pink",
+        "battery": "pink",
         "biofuel": "green",
         "coal": "brown",
         "dsr": "red",
