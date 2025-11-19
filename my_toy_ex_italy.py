@@ -174,7 +174,7 @@ print(pypsa_model.network)
 # (IV.2.i) Add bus for considered country
 # N.B. Italy coordinates set randomly! (not useful in the calculation that will be done this week)
 # [N-countries] Add key, values (tuple of coordinates) to the following 'coordinates' dictionary
-from toy_model_params.italy_parameters import gps_coords
+from toy_model_params.poland_parameters import gps_coords
 coordinates = {country: gps_coords}
 pypsa_model.add_gps_coordinates(countries_gps_coords=coordinates)
 
@@ -188,7 +188,7 @@ pypsa_model.add_gps_coordinates(countries_gps_coords=coordinates)
 # (keeping format of dataclass - sort of enriched dictionary -, just change values directly in
 # file toy_model_params/{country}_parameters.py)
 from common.fuel_sources import set_fuel_sources_from_json, DUMMY_FUEL_SOURCES
-from toy_model_params.italy_parameters import get_generators, set_gen_as_list_of_gen_units_data
+from toy_model_params.poland_parameters import get_generators, set_gen_as_list_of_gen_units_data
 fuel_sources = set_fuel_sources_from_json()
 
 # get properties of generators to be set on the unique considered bus here
