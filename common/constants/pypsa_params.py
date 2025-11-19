@@ -3,6 +3,10 @@ from dataclasses import dataclass
 
 @dataclass
 class GenUnitsPypsaParams:
+    soc_init: float = 'state_of_charge_initial'
+    # if store/discharge efficiency to be distinguished, e.g. for stocks
+    efficiency_store: str = 'efficiency_store'  
+    efficiency_dispatch: str = 'efficiency_dispatch'
     bus: str = 'bus'
     carrier: str = 'carrier'
     capa_factors: str = 'p_max_pu'
