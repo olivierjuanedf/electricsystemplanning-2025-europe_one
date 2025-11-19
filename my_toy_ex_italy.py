@@ -274,6 +274,7 @@ if optim_status == pypsa_opt_resol_status:
     # Look at the following methods if you want to see how to access optimal decisions in PyPSA framework
     pypsa_model.get_prod_var_opt()
     pypsa_model.get_storage_vars_opt()
+    pypsa_model.get_link_flow_vars_opt()
     pypsa_model.get_sde_dual_var_opt()
 
     print('Plot installed capacities (INPUT parameter), generation and prices (optimisation OUTPUTS) figures')

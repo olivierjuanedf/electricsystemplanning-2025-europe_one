@@ -152,6 +152,8 @@ class PypsaModel:
     storage_prod_var_opt: pd.DataFrame = None  # idem for Storage prod -> prod (turbining)
     storage_cons_var_opt: pd.DataFrame = None  # idem for Storage prod -> cons (pumping)
     storage_soc_opt: pd.DataFrame = None  # idem for Storage prod -> SoC (State-of-Charge)
+    link_flow_var_opt_direct: pd.DataFrame = None  # flow in the links at optimum, direct direction
+    link_flow_var_opt_reverse: pd.DataFrame = None  # reverse direction
     optim_solver_params: SolverParams = None
     DEFAULT_CARRIER = 'ac'
 
@@ -371,6 +373,12 @@ class PypsaModel:
         self.storage_prod_var_opt = self.network.storage_units_t.p
         self.storage_cons_var_opt = self.network.storage_units_t.p_store
         self.storage_soc_opt = self.network.storage_units_t.state_of_charge
+
+    def get_link_flow_vars_opt(self):
+        # flow to the first bus of the link (origin)
+        self.link_flow_var_opt_direct = self.network.links_t.p0
+        # to the second bus (destination)
+        self.link_flow_var_opt_reverse = self.network.links_t.p1
 
     def get_sde_dual_var_opt(self):
         self.sde_dual_var_opt = self.network.buses_t.marginal_price
