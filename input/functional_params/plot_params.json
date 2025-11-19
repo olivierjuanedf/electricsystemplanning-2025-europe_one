@@ -65,8 +65,8 @@
       }
     },
     "order": [
-      "wind_onshore",
-      "wind_offshore",
+      "wind_on_shore",
+      "wind_off_shore",
       "solar_pv",
       "solar_thermal",
       "others_fatal",
@@ -80,7 +80,7 @@
       "coal",
       "gas",
       "oil",
-      "batteries",
+      "battery",
       "dsr",
       "failure"
     ]

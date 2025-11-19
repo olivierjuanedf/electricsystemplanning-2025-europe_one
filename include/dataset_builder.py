@@ -40,6 +40,9 @@ class GenerationUnitData:
     max_hours: float = None
     cyclic_state_of_charge: bool = None
     inflow: np.ndarray = None
+    state_of_charge_initial : float = None
+    efficiency_store: float = None
+    efficiency_dispatch: float = None
 
     def get_non_none_attr_names(self):
         return [key for key, val in self.__dict__.items() if val is not None]
@@ -200,12 +203,12 @@ class PypsaModel:
                     continue
 
                 # case of storage units, identified via the presence of max_hours param
-                if pypsa_gen_unit_dict.get(GEN_UNITS_PYPSA_PARAMS.max_hours, None) is not None:
+                if GEN_UNITS_PYPSA_PARAMS.max_hours in pypsa_gen_unit_dict:
                     # initial SoC fixed to 80% statically here
-                    init_soc = (pypsa_gen_unit_dict[GEN_UNITS_PYPSA_PARAMS.power_capa]
-                                * pypsa_gen_unit_dict[GEN_UNITS_PYPSA_PARAMS.max_hours] * 0.8)
-                    self.network.add('StorageUnit', bus=f'{country_bus_name}', **pypsa_gen_unit_dict,
-                                     state_of_charge_initial=init_soc)
+                    logging.info(f'Default value set for {pypsa_gen_unit_dict[GEN_UNITS_PYPSA_PARAMS.name]} init. SOC as 80% of energy storage capacity ')
+                    init_soc = (pypsa_gen_unit_dict[GEN_UNITS_PYPSA_PARAMS.power_capa] * pypsa_gen_unit_dict[GEN_UNITS_PYPSA_PARAMS.max_hours] * 0.8)
+                    pypsa_gen_unit_dict[GEN_UNITS_PYPSA_PARAMS.soc_init] = init_soc
+                    self.network.add('StorageUnit', bus=f'{country_bus_name}', **pypsa_gen_unit_dict)
                 else:
                     self.network.add('Generator', bus=f'{country_bus_name}', **pypsa_gen_unit_dict)
         generator_names = self.get_generator_names()

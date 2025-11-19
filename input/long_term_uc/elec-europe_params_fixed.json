@@ -5,7 +5,7 @@
         "solar_pv"
       ],
       "solar_thermal": [
-        "csp_nostorage"
+        "csp_no_storage"
       ],
       "wind_offshore": [
         "wind_offshore"
@@ -73,7 +73,7 @@
   },
   "agg_prod_types_with_cf_data": [
     "solar_pv",
-    "solar_thermal",
+    "csp_no_storage",
     "wind_offshore",
     "wind_onshore"
   ],
@@ -215,7 +215,7 @@
       "efficiency": 1,
       "committable": "false"
     },
-    "solar_thermal": {
+    "csp_no_storage": {
       "carrier": "solar",
       "p_min_pu": 0,
       "efficiency": 1,

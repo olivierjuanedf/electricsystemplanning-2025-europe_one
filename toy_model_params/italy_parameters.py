@@ -7,7 +7,7 @@ from common.fuel_sources import FuelSource, FuelNames, DummyFuelNames
 from include.dataset_builder import GenerationUnitData
 
 GENERATOR_DICT_TYPE = Dict[str, Union[float, int, str]]
-gps_coords = (12.5674, 41.8719)
+gps_coords = (-3.702, 40.416)
 
 
 def get_generators(country_trigram: str, fuel_sources: Dict[str, FuelSource], wind_on_shore_cf_data: pd.DataFrame,
