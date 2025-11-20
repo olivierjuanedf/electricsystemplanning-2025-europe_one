@@ -165,6 +165,9 @@ def save_data_and_fig_results(pypsa_model: PypsaModel, uc_run_params: UCRunParam
                                                 start_horizon=uc_run_params.uc_period_start)
         # set UC summary metrics (Energy Not Served, number of failure hours, costs)
         pypsa_model.set_uc_summary_metrics(total_cost=objective_value, failure_penalty=uc_run_params.failure_penalty)
+        pypsa_model.json_dump_uc_summary_metrics(year=uc_run_params.selected_target_year,
+                                                climatic_year=uc_run_params.selected_climatic_year,
+                                                start_horizon=uc_run_params.uc_period_start)
         return pypsa_model.uc_summary_metrics
     else:
         logging.info(f'Optimisation resolution status is not {pypsa_opt_resol_status} '

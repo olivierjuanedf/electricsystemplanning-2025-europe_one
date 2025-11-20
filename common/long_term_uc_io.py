@@ -245,6 +245,7 @@ def set_full_lt_uc_output_folder(folder_type: str = None, country: str = None, t
     return '/'.join(folders_tb_join)
 
 
+# TODO: merge 2 following functions
 def get_csv_file_named(name: str, country: str, year: int, climatic_year: int, start_horizon: datetime,
                        toy_model_output: bool = False, create_subdir: bool = True) -> str:
     output_folder = set_full_lt_uc_output_folder(folder_type='data', country=country, toy_model_output=toy_model_output)
@@ -252,6 +253,15 @@ def get_csv_file_named(name: str, country: str, year: int, climatic_year: int, s
         make_dir(full_path=output_folder)
 
     return get_output_file_named(name, 'csv', output_folder, country, year, climatic_year, start_horizon)
+
+
+def get_json_file_named(name: str, country: str, year: int, climatic_year: int, start_horizon: datetime,
+                        toy_model_output: bool = False, create_subdir: bool = True) -> str:
+    output_folder = set_full_lt_uc_output_folder(folder_type='data', country=country, toy_model_output=toy_model_output)
+    if create_subdir:
+        make_dir(full_path=output_folder)
+
+    return get_output_file_named(name, 'json', output_folder, country, year, climatic_year, start_horizon)
 
 
 def get_opt_power_file(country: str, year: int, climatic_year: int, start_horizon: datetime,
@@ -276,3 +286,8 @@ def get_marginal_prices_file(country: str, year: int, climatic_year: int, start_
                              toy_model_output: bool = False) -> str:
     return get_csv_file_named(name='marginal_prices', country=country, year=year, climatic_year=climatic_year, 
                               start_horizon=start_horizon, toy_model_output=toy_model_output)
+
+def get_uc_summary_file(country: str, year: int, climatic_year: int, start_horizon: datetime,
+                        toy_model_output: bool = False) -> str:
+    return get_json_file_named(name='uc-summary', country=country, year=year, climatic_year=climatic_year,
+                               start_horizon=start_horizon, toy_model_output=toy_model_output)

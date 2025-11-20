@@ -18,7 +18,7 @@ from common.error_msgs import print_errors_list
 from common.fuel_sources import FuelSource
 from common.long_term_uc_io import (get_marginal_prices_file, get_network_figure, get_opt_power_file,
                                     get_storage_opt_dec_file, get_link_flow_opt_dec_file, get_figure_file_named, 
-                                    FigNamesPrefix, get_output_figure)
+                                    FigNamesPrefix, get_output_figure, get_uc_summary_file)
 from common.plot_params import PlotParams
 from include.uc_summary_metrics import UCSummaryMetrics
 from utils.basic_utils import lexico_compar_str, rm_elts_with_none_val, rm_elts_in_str, sort_lexicographically
@@ -409,6 +409,13 @@ class PypsaModel:
         self.uc_summary_metrics = UCSummaryMetrics(per_country_ens=per_country_ens, 
                                                    per_country_n_failure_hours=per_country_n_failure_h,
                                                    total_cost=total_cost, total_operational_cost=eur_total_ope_cost)
+
+    def json_dump_uc_summary_metrics(self, year: int, climatic_year: int, start_horizon: datetime, 
+                                     country: str = 'europe', toy_model_output: bool = False):
+        json_file = get_uc_summary_file(country=country, year=year, 
+                                        climatic_year=climatic_year, start_horizon=start_horizon,
+                                        toy_model_output=toy_model_output)
+        self.uc_summary_metrics.json_dump(file=json_file)
 
     def plot_installed_capas(self, country: str, year: int, toy_model_output: bool = False):
         country_trigram = set_country_trigram(country=country)

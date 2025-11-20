@@ -1,5 +1,6 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import Dict
+import json
 
 
 def dict_to_str(d: Dict[str, float], unit: str = None) -> str:
@@ -39,3 +40,9 @@ class UCSummaryMetrics:
             uc_summary_metrics_str += f'{metric_sep}Total operational cost (without failure penalty incl.): {dict_to_str(d=self.per_country_total_operational_cost, unit='€')}'
         return uc_summary_metrics_str
     
+    def json_dump(self, file: str):
+        summary_dict = asdict(self)
+        # remove None values
+        summary_dict = {key: val for key, val in summary_dict.items() if val is not None}
+        with open(file, "w", encoding="utf-8") as f:
+            json.dump(summary_dict, f)
