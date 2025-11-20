@@ -390,7 +390,7 @@ class PypsaModel:
         objective_value = get_network_obj_value(network=self.network)
         logging.info(
             f'Optimisation resolution status is {pypsa_resol_status} with objective value (cost) = '
-            f'{objective_value:.2f} -> output data (resp. figures) can be generated')
+            f'{int(objective_value/1e6)} (M€) -> output data (resp. figures) can be generated')
         return objective_value
 
     def calc_co2_emissions(self, per_country: bool = False) -> Union[float, Dict[str, float]]:
@@ -420,10 +420,12 @@ class PypsaModel:
             eur_total_ope_cost = None
         # co2 emissions
         total_co2_emissions = self.calc_co2_emissions()
-        self.uc_summary_metrics = UCSummaryMetrics(per_country_ens=per_country_ens, 
+        # attention convert to GWh/M€ and int to get smaller values for synthesis. TODO: check CO2 unit!
+        self.uc_summary_metrics = UCSummaryMetrics(per_country_ens={c: int(val/1e3) for c, val in per_country_ens.items()}, 
                                                    per_country_n_failure_hours=per_country_n_failure_h,
-                                                   total_cost=total_cost, total_operational_cost=eur_total_ope_cost,
-                                                   total_co2_emissions=total_co2_emissions)
+                                                   total_cost=int(total_cost/1e6), 
+                                                   total_operational_cost=int(eur_total_ope_cost/1e6),
+                                                   total_co2_emissions=total_co2_emissions/1e3)
 
     def json_dump_uc_summary_metrics(self, year: int, climatic_year: int, start_horizon: datetime, 
                                      country: str = 'europe', toy_model_output: bool = False):
