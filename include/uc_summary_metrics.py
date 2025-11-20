@@ -22,8 +22,10 @@ class UCSummaryMetrics:
     per_country_n_failure_hours: Dict[str, float]
     total_cost: float  # over Europe
     total_operational_cost: float  # without failure (fictive) penalty cost
+    total_co2_emissions: float  # over Europe
     per_country_total_cost: Dict[str, float] = None  # including failure penalty (fictive) cost
     per_country_total_operational_cost: Dict[str, float] = None  # without this cost
+    per_country_co2_emissions: Dict[str, float] = None 
 
     def __repr__(self, europe_name: str = None) -> str:
         metric_sep = '\n-> '
@@ -34,10 +36,13 @@ class UCSummaryMetrics:
         uc_summary_metrics_str += f'{metric_sep}Number of failure hours: {dict_to_str(d=self.per_country_n_failure_hours)}'
         uc_summary_metrics_str += f'{metric_sep}Total cost (over Europe): {self.total_cost} (€)'
         uc_summary_metrics_str += f'{metric_sep}Total operational cost (Europe, without failure penalty incl.): {self.total_operational_cost} (€)'
+        uc_summary_metrics_str += f'{metric_sep}Total CO2 emissions (over Europe): {self.total_co2_emissions} (??)'
         if self.per_country_total_cost is not None:
             uc_summary_metrics_str += f'{metric_sep}Total cost: {dict_to_str(d=self.per_country_total_cost, unit='€')}'
         if self.per_country_total_operational_cost is not None:
             uc_summary_metrics_str += f'{metric_sep}Total operational cost (without failure penalty incl.): {dict_to_str(d=self.per_country_total_operational_cost, unit='€')}'
+        if self.per_country_co2_emissions is not None:
+            uc_summary_metrics_str += f'{metric_sep}Total CO2 emissions: {dict_to_str(d=self.per_country_co2_emissions, unit='??')}'
         return uc_summary_metrics_str
     
     def json_dump(self, file: str):
