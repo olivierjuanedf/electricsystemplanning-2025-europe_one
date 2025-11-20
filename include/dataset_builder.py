@@ -425,7 +425,7 @@ class PypsaModel:
                                                    per_country_n_failure_hours=per_country_n_failure_h,
                                                    total_cost=int(total_cost/1e6), 
                                                    total_operational_cost=int(eur_total_ope_cost/1e6),
-                                                   total_co2_emissions=total_co2_emissions/1e3)
+                                                   total_co2_emissions=int(total_co2_emissions/1e3))
 
     def json_dump_uc_summary_metrics(self, year: int, climatic_year: int, start_horizon: datetime, 
                                      country: str = 'europe', toy_model_output: bool = False):
