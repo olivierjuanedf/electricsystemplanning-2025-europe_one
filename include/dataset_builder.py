@@ -21,7 +21,7 @@ from common.long_term_uc_io import (get_marginal_prices_file, get_network_figure
                                     FigNamesPrefix, get_output_figure, get_uc_summary_file)
 from common.plot_params import PlotParams
 from include.uc_summary_metrics import UCSummaryMetrics
-from utils.basic_utils import lexico_compar_str, rm_elts_with_none_val, rm_elts_in_str, sort_lexicographically
+from utils.basic_utils import lexico_compar_str, rm_elts_with_none_val, rm_elts_in_str, sort_lexicographically, format_with_spaces
 from utils.df_utils import rename_df_columns
 from utils.dir_utils import make_dir
 from utils.pypsa_utils import get_network_obj_value
@@ -388,9 +388,10 @@ class PypsaModel:
 
     def get_opt_value(self, pypsa_resol_status: str) -> float:
         objective_value = get_network_obj_value(network=self.network)
+        objective_value_refmted = format_with_spaces(number=int(objective_value/1e6))
         logging.info(
             f'Optimisation resolution status is {pypsa_resol_status} with objective value (cost) = '
-            f'{int(objective_value/1e6)} (M€) -> output data (resp. figures) can be generated')
+            f'{objective_value_refmted} (M€) -> output data (resp. figures) can be generated')
         return objective_value
 
     def calc_co2_emissions(self, per_country: bool = False) -> Union[float, Dict[str, float]]:

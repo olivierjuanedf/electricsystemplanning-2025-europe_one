@@ -2,10 +2,18 @@ from dataclasses import dataclass, asdict
 from typing import Dict
 import json
 
+from utils.basic_utils import format_with_spaces
 
-def dict_to_str(d: Dict[str, float]) -> str:
+
+def dict_to_str(d: Dict[str, float], nbers_with_spaces: bool = False) -> str:
+    """
+    Nice printing of dictionary into logs
+    """
     str_sep = ', '
-    key_val_lst = [f'{key}: {val}' for key, val in d.items()]
+    if nbers_with_spaces:
+        key_val_lst = [f'{key}: {format_with_spaces(number=val)}' for key, val in d.items()]
+    else:
+        key_val_lst = [f'{key}: {val}' for key, val in d.items()]
     return str_sep.join(key_val_lst)
 
 
@@ -34,15 +42,15 @@ class UCSummaryMetrics:
             uc_summary_metrics_str += f'for {europe_name}'
         uc_summary_metrics_str += f'{metric_sep}Energy Not Served ({self.ENERGY_UNIT}): {dict_to_str(d=self.per_country_ens)}'
         uc_summary_metrics_str += f'{metric_sep}Number of failure hours: {dict_to_str(d=self.per_country_n_failure_hours)}'
-        uc_summary_metrics_str += f'{metric_sep}Total cost (over Europe, {self.COST_UNIT}): {self.total_cost}'
-        uc_summary_metrics_str += f'{metric_sep}Total operational cost (Europe, without failure penalty incl., {self.COST_UNIT}): {self.total_operational_cost}'
-        uc_summary_metrics_str += f'{metric_sep}Total CO2 emissions (over Europe, {self.CO2_EMIS_UNIT}): {self.total_co2_emissions}'
+        uc_summary_metrics_str += f'{metric_sep}Total cost (over Europe, {self.COST_UNIT}): {format_with_spaces(number=self.total_cost)}'
+        uc_summary_metrics_str += f'{metric_sep}Total operational cost (Europe, without failure penalty incl., {self.COST_UNIT}): {format_with_spaces(number=self.total_operational_cost)}'
+        uc_summary_metrics_str += f'{metric_sep}Total CO2 emissions (over Europe, {self.CO2_EMIS_UNIT}): {format_with_spaces(number=self.total_co2_emissions)}'
         if self.per_country_total_cost is not None:
-            uc_summary_metrics_str += f'{metric_sep}Total cost ({self.COST_UNIT}): {dict_to_str(d=self.per_country_total_cost)}'
+            uc_summary_metrics_str += f'{metric_sep}Total cost ({self.COST_UNIT}): {dict_to_str(d=self.per_country_total_cost, nbers_with_spaces=True)}'
         if self.per_country_total_operational_cost is not None:
-            uc_summary_metrics_str += f'{metric_sep}Total operational cost (without failure penalty incl., {self.COST_UNIT}): {dict_to_str(d=self.per_country_total_operational_cost)}'
+            uc_summary_metrics_str += f'{metric_sep}Total operational cost (without failure penalty incl., {self.COST_UNIT}): {dict_to_str(d=self.per_country_total_operational_cost, nbers_with_spaces=True)}'
         if self.per_country_co2_emissions is not None:
-            uc_summary_metrics_str += f'{metric_sep}Total CO2 emissions ({self.CO2_EMIS_UNIT}): {dict_to_str(d=self.per_country_co2_emissions)}'
+            uc_summary_metrics_str += f'{metric_sep}Total CO2 emissions ({self.CO2_EMIS_UNIT}): {dict_to_str(d=self.per_country_co2_emissions, nbers_with_spaces=True)}'
         return uc_summary_metrics_str
     
     def json_dump(self, file: str):

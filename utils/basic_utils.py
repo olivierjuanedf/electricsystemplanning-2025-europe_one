@@ -214,3 +214,7 @@ def check_all_values_equal(d: dict) -> bool:
 
     traverse(d)
     return all([elt == values[0] for elt in values])
+
+
+def format_with_spaces(number) -> str:
+    return f"{number:,}".replace(",", " ")
