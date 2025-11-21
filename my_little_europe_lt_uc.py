@@ -134,6 +134,7 @@ def save_data_and_fig_results(pypsa_model: PypsaModel, uc_run_params: UCRunParam
         pypsa_model.get_storage_vars_opt()
         pypsa_model.get_link_flow_vars_opt()
         pypsa_model.get_sde_dual_var_opt()
+        pypsa_model.get_link_capa_dual_var_opt()
         # get plot parameters associated to aggreg. production types
         per_dim_plot_params = read_plot_params()
         plot_params_agg_pt = per_dim_plot_params[DataDimensions.agg_prod_type]

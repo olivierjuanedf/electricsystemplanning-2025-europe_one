@@ -395,6 +395,17 @@ class PypsaModel:
     def get_sde_dual_var_opt(self):
         self.sde_dual_var_opt = self.network.buses_t.marginal_price
 
+    def get_link_capa_dual_var_opt(self):
+        logging.warning('Link capa. dual variable code to be fixed (needs to "enter" into Linopy framework - not directly available in PyPSA 0.35.1)')
+        linopy_model = self.network.model
+        # TODO: fix it, going into linopy framework... apparently not possible to directly access this info from PyPSA
+        # see linopy_model.constraints to get a list of considered constraints (Link-fix-p-lower, but cannot be accessed
+        # with link_fix_p_lower)
+        # loop over links... and build df
+        # con_obj = linopy_model.link_fix_p_upper[link_name]
+        # Retrieve the dual value (shadow price)
+        # dual_value = linopy_model.dual[con_obj]
+
     def get_opt_value(self, pypsa_resol_status: str) -> float:
         objective_value = get_network_obj_value(network=self.network)
         objective_value_refmted = format_with_spaces(number=int(objective_value/1e6))
