@@ -23,7 +23,7 @@ from common.long_term_uc_io import (get_marginal_prices_file, get_network_figure
 from common.plot_params import PlotParams
 from include.uc_summary_metrics import UCSummaryMetrics
 from utils.basic_utils import lexico_compar_str, rm_elts_with_none_val, rm_elts_in_str, sort_lexicographically, format_with_spaces
-from utils.df_utils import rename_df_columns, replace_all_none_values_in_df
+from utils.df_utils import rename_df_columns, sort_out_cols_with_zero_values
 from utils.dir_utils import make_dir
 from utils.pypsa_utils import get_network_obj_value
 from utils.serializer import array_serializer
@@ -482,7 +482,8 @@ class PypsaModel:
             plt.close()
 
     def plot_opt_prod_var(self, plot_params_agg_pt: PlotParams, country: str, year: int,
-                          climatic_year: int, start_horizon: datetime, toy_model_output: bool = False):
+                          climatic_year: int, start_horizon: datetime, toy_model_output: bool = False, 
+                          rm_all_zero_curves: bool = True):
         """ 
         Plot 'stack' of optimized production profiles
         """
@@ -499,6 +500,8 @@ class PypsaModel:
             current_prod_var_opt = rename_df_columns(df=current_prod_var_opt, old_to_new_cols=new_prod_cols)
             current_prod_var_opt = set_col_order_for_plot(df=current_prod_var_opt,
                                                           cols_ordered=plot_params_agg_pt.order)
+            if rm_all_zero_curves:
+                current_prod_var_opt = sort_out_cols_with_zero_values(df=current_prod_var_opt, abs_val_threshold=1e-2)
             current_prod_var_opt.div(1e3).plot.area(subplots=False, ylabel='GW',
                                                     color=plot_params_agg_pt.per_case_color)
             plt.tight_layout()

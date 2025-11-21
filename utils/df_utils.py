@@ -193,6 +193,11 @@ def resample_and_distribute(df: pd.DataFrame, date_col: str, value_cols: list, m
     return resampled.reset_index().rename(columns={'index': date_col})
 
 
+def sort_out_cols_with_zero_values(df: pd.DataFrame, abs_val_threshold: float) -> pd.DataFrame:
+    df = df.loc[:, (df.abs() >= abs_val_threshold).any(axis=0)]
+    return df
+
+
 if __name__ == '__main__':
     data = {
         'date': pd.date_range('2025-11-10', periods=3, freq='D'),
