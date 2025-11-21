@@ -128,6 +128,11 @@ def replace_none_values_in_df(df: pd.DataFrame, per_col_repl_values: dict, key_c
     return df
 
 
+def replace_all_none_values_in_df(df: pd.DataFrame, value_tb_set) -> pd.DataFrame:
+    df.fillna(value=value_tb_set, inplace=True)
+    return df
+
+
 def set_key_columns(col_names: list, tuple_values: List[tuple], n_repeat: int = None) -> pd.DataFrame:
     """
     :param col_names: list of key column names
